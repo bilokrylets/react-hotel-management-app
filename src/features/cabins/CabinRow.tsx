@@ -1,4 +1,42 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+import { Cabin as CabinType } from '../../types/cabin';
+import { formatCurrency } from '../../utils/helpers';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteCabin } from '../../services/apiCabins';
+import toast from 'react-hot-toast';
+
+type Props = {
+  cabin: CabinType;
+};
+
+function CabinRow({ cabin }: Props) {
+  const queryClient = useQueryClient();
+  const { isPending: isDeleting, mutate } = useMutation({
+    mutationFn: deleteCabin,
+    onSuccess: () => {
+      toast.success('Cabin successfully deleted');
+
+      queryClient.invalidateQueries({
+        queryKey: ['cabins'],
+      });
+    },
+    onError: (err) => toast.error(err.message),
+  });
+
+  return (
+    <TableRow role="row">
+      <Img src={cabin.image} alt="img" />
+      <Cabin>{cabin.name}</Cabin>
+      <div>fits up to {cabin.maxCapacity}</div>
+      <Price>{formatCurrency(cabin.regularPrice)}</Price>
+      <Discount>{formatCurrency(cabin.discount)}</Discount>
+      <button onClick={() => mutate(cabin.id)} disabled={isDeleting}>
+        delete
+      </button>
+    </TableRow>
+  );
+}
+export default CabinRow;
 
 const TableRow = styled.div`
   display: grid;
@@ -25,16 +63,16 @@ const Cabin = styled.div`
   font-size: 1.6rem;
   font-weight: 600;
   color: var(--color-grey-600);
-  font-family: "Sono";
+  font-family: 'Sono';
 `;
 
 const Price = styled.div`
-  font-family: "Sono";
+  font-family: 'Sono';
   font-weight: 600;
 `;
 
 const Discount = styled.div`
-  font-family: "Sono";
+  font-family: 'Sono';
   font-weight: 500;
   color: var(--color-green-700);
 `;
