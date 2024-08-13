@@ -16,7 +16,6 @@ function CreateCabinForm() {
   const { register, handleSubmit, reset, getValues, formState } = useForm();
 
   const { errors } = formState;
-  console.log(errors);
 
   const { mutate, isPending } = useMutation({
     mutationFn: createCabin,
@@ -29,7 +28,7 @@ function CreateCabinForm() {
   });
 
   function onSubmit(data) {
-    mutate(data);
+    mutate({ ...data, image: data.image[0] });
   }
 
   return (
@@ -97,7 +96,7 @@ function CreateCabinForm() {
       </FormRow>
 
       <FormRow label="Cabin photo" error={errors?.image?.message}>
-        <FileInput id="image" accept="image/*" />
+        <FileInput id="image" accept="image/*" {...register('image')} />
       </FormRow>
 
       <FormRow>
