@@ -1,4 +1,4 @@
-import { Cabin } from '../types/cabin';
+import { CabinData } from '../types/cabin';
 import supabase, { supabaseUrl } from './supabase';
 
 export async function getCabins() {
@@ -12,10 +12,7 @@ export async function getCabins() {
   return data;
 }
 
-export async function createEditCabin(
-  newCabin: Omit<Cabin, 'id' | 'created_at'>,
-  id,
-) {
+export async function createEditCabin(newCabin: CabinData, id) {
   const hasImagePath = newCabin.image.startsWith?.(supabaseUrl);
 
   const imageName = `${Math.random()}-${newCabin.image.name}`.replaceAll(

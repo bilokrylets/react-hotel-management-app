@@ -8,3 +8,5 @@ export type Cabin = {
   description: string;
   image: any;
 };
+
+export type CabinData = Omit<Cabin, 'id' | 'created_at'>;
