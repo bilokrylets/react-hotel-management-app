@@ -12,12 +12,10 @@ export async function getCabins() {
   return data;
 }
 
-type CreateEditProps = {
-  newCabin: Cabin;
-  id: string;
-};
-
-export async function createEditCabin(newCabin, id) {
+export async function createEditCabin(
+  newCabin: Omit<Cabin, 'id' | 'created_at'>,
+  id,
+) {
   const hasImagePath = newCabin.image.startsWith?.(supabaseUrl);
 
   const imageName = `${Math.random()}-${newCabin.image.name}`.replaceAll(
@@ -43,7 +41,7 @@ export async function createEditCabin(newCabin, id) {
   }
 
   //upload image
-  // if (hasImagePath) return data;
+  if (hasImagePath) return data;
 
   const { error: storageError } = await supabase.storage
     .from('cabin-images')

@@ -6,6 +6,7 @@ function Sidebar() {
   return (
     <StyledSidebar>
       <Logo />
+
       <MainNav />
     </StyledSidebar>
   );

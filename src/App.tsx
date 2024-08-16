@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import GlobalStyles from './styles/globalStyles';
 
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
