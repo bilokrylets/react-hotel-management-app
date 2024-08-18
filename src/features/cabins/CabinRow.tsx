@@ -46,7 +46,7 @@ function CabinRow({ cabin }: Props) {
         <Cabin>{name}</Cabin>
         <div>fits up to {maxCapacity}</div>
         <Price>{formatCurrency(regularPrice)}</Price>
-        <Discount>{formatCurrency(discount)}</Discount>
+        <Discount>{discount !== 0 ? formatCurrency(discount) : '-'}</Discount>
         <div>
           <Modal>
             <Menus.Menu>
