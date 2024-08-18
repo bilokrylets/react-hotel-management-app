@@ -16,7 +16,7 @@ type Props = {
 
 function CabinRow({ cabin }: Props) {
   const { deleteCabin, isDeleting } = useDeleteCabin();
-  const { isCreating, createCabin } = useCreateCabin();
+  const { createCabin } = useCreateCabin();
 
   const {
     id: cabinId,
