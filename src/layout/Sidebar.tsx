@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import Logo from '../ui/Logo';
 import MainNav from '../ui/MainNav';
+import Uploader from '../data/Uploader';
 
 function Sidebar() {
   return (
@@ -8,6 +9,8 @@ function Sidebar() {
       <Logo />
 
       <MainNav />
+
+      <Uploader />
     </StyledSidebar>
   );
 }
