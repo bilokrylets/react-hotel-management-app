@@ -16,6 +16,7 @@ function Filter({ filterField, options }: Props) {
 
   function handleClick(value) {
     searchParams.set(filterField, value);
+    searchParams.set('page', '1');
     setSearchParams(searchParams);
   }
   return (
