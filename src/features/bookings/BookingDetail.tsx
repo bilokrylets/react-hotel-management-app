@@ -12,6 +12,10 @@ import { useMoveBack } from '../../hooks/useMoveBack';
 import { useBooking } from './hooks/useBooking';
 import Spinner from '../../ui/Spinner';
 import { useNavigate } from 'react-router-dom';
+import { useCheckout } from '../check-in-out/hooks/useCheckout';
+import Modal from '../../ui/Modal';
+import ConfirmDelete from '../../ui/ConfirmDelete';
+import { useDeleteBooking } from './hooks/useDeleteBooking';
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -21,6 +25,8 @@ const HeadingGroup = styled.div`
 
 function BookingDetail() {
   const { booking, isLoading } = useBooking();
+  const { checkout, isCheckingOut } = useCheckout();
+  const { deleteBooking, isDeleting } = useDeleteBooking();
   const navigate = useNavigate();
 
   const moveBack = useMoveBack();
@@ -51,6 +57,27 @@ function BookingDetail() {
         {status === 'unconfirmed' && (
           <Button onClick={() => navigate(`/checkin/${id}`)}>Check in</Button>
         )}
+
+        {status === 'checked-in' && (
+          <Button onClick={() => checkout(id)} disabled={isCheckingOut}>
+            Check out
+          </Button>
+        )}
+
+        <Modal>
+          <Modal.Open opensWindowName="delete">
+            <Button variation="danger">Delete booking</Button>
+          </Modal.Open>
+          <Modal.Window name="delete">
+            <ConfirmDelete
+              onConfirm={() => {
+                deleteBooking(id, { onSettled: () => navigate(-1) });
+              }}
+              disabled={isDeleting}
+              resourceName="booking"
+            />
+          </Modal.Window>
+        </Modal>
 
         <Button variation="secondary" onClick={moveBack}>
           Back
