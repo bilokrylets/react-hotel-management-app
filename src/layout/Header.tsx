@@ -1,7 +1,12 @@
 import styled from 'styled-components';
+import Logout from '../ui/Logout';
 
 function Header() {
-  return <StyledHeader>Header</StyledHeader>;
+  return (
+    <StyledHeader>
+      <Logout />
+    </StyledHeader>
+  );
 }
 
 const StyledHeader = styled.header`
