@@ -1,11 +1,30 @@
+import { Login } from '../types/login';
 import supabase from './supabase';
 
-type LoginProps = {
+type SignUp = {
+  fullName: string;
   email: string;
   password: string;
 };
 
-export async function login({ email, password }: LoginProps) {
+export async function signup({ fullName, email, password }: SignUp) {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        fullName,
+        avatar: '',
+      },
+    },
+  });
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
+export async function login({ email, password }: Login) {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
