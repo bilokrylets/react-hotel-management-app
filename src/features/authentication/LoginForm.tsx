@@ -12,7 +12,7 @@ function LoginForm() {
   const [password, setPassword] = useState('believer');
   const { login, isLoading } = useLogin();
 
-  function handleSubmit(e: SubmitEvent) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!email || !password) return;
 
