@@ -18,6 +18,13 @@ import { useCheckout } from '../check-in-out/hooks/useCheckout';
 import Modal from '../../ui/Modal';
 import ConfirmDelete from '../../ui/ConfirmDelete';
 import { useDeleteBooking } from './hooks/useDeleteBooking';
+import { Booking } from '../../types/booking';
+
+type Status = {
+  unconfirmed: string;
+  'checked-in': string;
+  'checked-out': string;
+};
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -49,16 +56,16 @@ const Amount = styled.div`
 function BookingRow({
   booking: {
     id: bookingId,
-    created_at,
     startDate,
     endDate,
     numNights,
-    numGuests,
     totalPrice,
     status,
     guests: { fullName: guestName, email },
     cabins: { name: cabinName },
   },
+}: {
+  booking: Booking;
 }) {
   const navigate = useNavigate();
   const { checkout, isCheckingOut } = useCheckout();
@@ -92,7 +99,9 @@ function BookingRow({
         </span>
       </Stacked>
 
-      <Tag type={statusToTagName[status]}>{status.replace('-', ' ')}</Tag>
+      <Tag type={statusToTagName[status as keyof Status]}>
+        {status.replace('-', ' ')}
+      </Tag>
 
       <Amount>{formatCurrency(totalPrice)}</Amount>
 

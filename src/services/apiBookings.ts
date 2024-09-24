@@ -7,11 +7,12 @@ type Props = {
     field: string;
     value: string;
     method?: string;
-  };
+  } | null;
   sortBy: {
     field: string;
     direction: string;
   };
+  page: number;
 };
 
 export async function getBookings({ filter, sortBy, page }: Props) {

@@ -6,7 +6,7 @@ export type Cabin = {
   regularPrice: number;
   discount: number;
   description: string;
-  image: any;
+  image: string;
 };
 
 export type CabinData = Omit<Cabin, 'id' | 'created_at'>;

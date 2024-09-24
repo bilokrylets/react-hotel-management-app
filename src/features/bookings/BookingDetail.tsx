@@ -37,6 +37,12 @@ function BookingDetail() {
 
   const { status, id } = booking;
 
+  type Status = {
+    unconfirmed: string;
+    'checked-in': string;
+    'checked-out': string;
+  };
+
   const statusToTagName = {
     unconfirmed: 'blue',
     'checked-in': 'green',
@@ -48,7 +54,9 @@ function BookingDetail() {
       <Row type="horizontal">
         <HeadingGroup>
           <Heading as="h1">Booking #{id}</Heading>
-          <Tag type={statusToTagName[status]}>{status.replace('-', ' ')}</Tag>
+          <Tag type={statusToTagName[status as keyof Status]}>
+            {status.replace('-', ' ')}
+          </Tag>
         </HeadingGroup>
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
       </Row>

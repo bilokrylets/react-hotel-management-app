@@ -4,7 +4,7 @@ import { HiEllipsisVertical } from 'react-icons/hi2';
 import styled from 'styled-components';
 import useClickOutside from '../services/useClickOutside';
 
-const MenusContext = createContext();
+const MenusContext = createContext({});
 
 type MenusProps = {
   children: ReactNode;
@@ -57,7 +57,14 @@ function List({ id, children }) {
   );
 }
 
-function Button({ children, icon, onClick }) {
+type ButtonProps = {
+  children: ReactNode;
+  icon: ReactNode;
+  onClick: () => void;
+  disabled?: boolean;
+};
+
+function Button({ children, icon, onClick }: ButtonProps) {
   const { close } = useContext(MenusContext);
   function handleClick() {
     onClick?.();
@@ -98,7 +105,14 @@ const StyledToggle = styled.button`
   }
 `;
 
-const StyledList = styled.ul`
+type StyledListProps = {
+  position: {
+    x: string;
+    y: string;
+  };
+};
+
+const StyledList = styled.ul<StyledListProps>`
   position: fixed;
 
   background-color: var(--color-grey-0);
