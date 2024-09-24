@@ -60,7 +60,7 @@ function List({ id, children }) {
 type ButtonProps = {
   children: ReactNode;
   icon: ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
 };
 

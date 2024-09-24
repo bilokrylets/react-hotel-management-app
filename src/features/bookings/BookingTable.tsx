@@ -5,13 +5,14 @@ import Empty from '../../ui/Empty';
 import { useBookings } from './hooks/useBookings';
 import Spinner from '../../ui/Spinner';
 import Pagination from '../../ui/Pagination';
+import { Booking } from '../../types/booking';
 
 function BookingTable() {
   const { bookings, isLoading, count } = useBookings();
 
   if (isLoading) return <Spinner />;
 
-  if (!bookings.length) return <Empty resource="bookings" />;
+  if (!bookings?.length) return <Empty resource="bookings" />;
 
   return (
     <Menus>
@@ -27,7 +28,7 @@ function BookingTable() {
 
         <Table.Body
           data={bookings}
-          render={(booking) => (
+          render={(booking: Booking) => (
             <BookingRow key={booking.id} booking={booking} />
           )}
         />

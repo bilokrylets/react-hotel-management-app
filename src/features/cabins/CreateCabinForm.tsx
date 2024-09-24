@@ -7,19 +7,30 @@ import { useForm } from 'react-hook-form';
 import FormRow from '../../ui/FormRow';
 import { useCreateCabin } from './hooks/useCreateCabin';
 import { useEditCabin } from './hooks/useEditCabin';
+import { Cabin } from '../../types/cabin';
 
 type Props = {
-  cabinToEdit?: object;
+  cabinToEdit?: Cabin;
   onClose?: () => void;
 };
 
-function CreateCabinForm({ cabinToEdit = {}, onClose }: Props) {
+function CreateCabinForm({
+  cabinToEdit = {
+    name: '',
+    maxCapacity: 0,
+    regularPrice: 0,
+    discount: 0,
+    image: undefined,
+  },
+  onClose,
+}: Props) {
   const { id: editId, ...editValues } = cabinToEdit;
   const isEditSession = Boolean(editId);
 
-  const { register, handleSubmit, reset, getValues, formState } = useForm({
-    defaultValues: isEditSession ? editValues : {},
-  });
+  const { register, handleSubmit, reset, getValues, formState } =
+    useForm<Cabin>({
+      defaultValues: isEditSession ? editValues : {},
+    });
   const { errors } = formState;
 
   const { createCabin, isCreating } = useCreateCabin();
@@ -27,7 +38,7 @@ function CreateCabinForm({ cabinToEdit = {}, onClose }: Props) {
 
   const isWorking = isCreating || isEditing;
 
-  function onSubmit(data) {
+  function onSubmit(data: Cabin) {
     const image = typeof data.image === 'string' ? data.image : data.image[0];
 
     if (isEditSession)

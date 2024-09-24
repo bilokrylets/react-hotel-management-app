@@ -12,7 +12,7 @@ export async function getCabins() {
   return data;
 }
 
-export async function createEditCabin(newCabin: CabinData, id) {
+export async function createEditCabin(newCabin: CabinData, id: string) {
   const hasImagePath = newCabin.image.startsWith?.(supabaseUrl);
 
   const imageName = `${Math.random()}-${newCabin.image.name}`.replaceAll(

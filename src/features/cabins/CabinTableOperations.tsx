@@ -2,8 +2,7 @@ import Filter from '../../ui/Filter';
 import SortBy from '../../ui/SortBy';
 import TableOperations from '../../ui/TableOperations';
 
-type Props = {};
-function CabinTableOperations({}: Props) {
+function CabinTableOperations() {
   return (
     <TableOperations>
       <Filter
