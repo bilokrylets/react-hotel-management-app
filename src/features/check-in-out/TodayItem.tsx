@@ -4,6 +4,7 @@ import { Flag } from '../../ui/Flag';
 import Button from '../../ui/Button';
 import { Link } from 'react-router-dom';
 import CheckoutButton from './CheckoutButton';
+import { Booking } from '../../types/booking';
 
 const StyledTodayItem = styled.li`
   display: grid;
@@ -24,13 +25,13 @@ const Guest = styled.div`
   font-weight: 500;
 `;
 
-function TodayItem({ activity }) {
+function TodayItem({ activity }: { activity: Booking }) {
   const { id, status, guests, numNights } = activity;
   return (
     <StyledTodayItem>
       {status === 'unconfirmed' && <Tag type="green">Arriving</Tag>}
       {status === 'checked-in' && <Tag type="blue">Arriving</Tag>}
-      <Flag src={guests.countryFlag} alt={`Flag on ${guests.county}`} />
+      <Flag src={guests.countryFlag} alt={`Flag on ${guests.country}`} />
       <Guest>{guests.fullName}</Guest>
       <div>{numNights}</div>
 

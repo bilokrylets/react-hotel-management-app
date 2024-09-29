@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { createEditCabin } from '../../../services/apiCabins';
-import { CabinData } from '../../../types/cabin';
+import { Cabin } from '../../../types/cabin';
 
 export function useEditCabin() {
   const queryClient = useQueryClient();
@@ -10,8 +10,8 @@ export function useEditCabin() {
       newCabinData,
       id,
     }: {
-      newCabinData: CabinData;
-      id: string;
+      newCabinData: Cabin;
+      id: number | undefined;
     }) => createEditCabin(newCabinData, id),
     onSuccess: () => {
       toast.success('Cabin successfully edited');

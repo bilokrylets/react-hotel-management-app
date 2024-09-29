@@ -114,15 +114,25 @@ const startDataDark = [
   },
 ];
 
-function prepareData(startData, stays) {
-  function incArrayValue(arr, field) {
+function prepareData(
+  startData: { duration: string; value: number; color: string }[],
+  stays: { numNights: number }[] | undefined,
+) {
+  function incArrayValue(
+    arr: {
+      duration: string;
+      value: number;
+      color: string;
+    }[],
+    field: string,
+  ) {
     return arr.map((obj) =>
       obj.duration === field ? { ...obj, value: obj.value + 1 } : obj,
     );
   }
 
   const data = stays
-    .reduce((arr, cur) => {
+    ?.reduce((arr, cur) => {
       const num = cur.numNights;
       if (num === 1) return incArrayValue(arr, '1 night');
       if (num === 2) return incArrayValue(arr, '2 nights');
@@ -140,11 +150,11 @@ function prepareData(startData, stays) {
 }
 
 type Props = {
-  confirmedStays: any;
+  confirmedStays: { numNights: number }[] | undefined;
 };
 
 function DurationChart({ confirmedStays }: Props) {
-  const { isDarkMode } = useDarkMode;
+  const isDarkMode = useDarkMode();
   const startData = isDarkMode ? startDataDark : startDataLight;
   const data = prepareData(startData, confirmedStays);
 
@@ -163,7 +173,7 @@ function DurationChart({ confirmedStays }: Props) {
             cy="50%"
             paddingAngle={3}
           >
-            {data.map((entry) => (
+            {data?.map((entry) => (
               <Cell
                 fill={entry.color}
                 stroke={entry.color}
@@ -175,7 +185,6 @@ function DurationChart({ confirmedStays }: Props) {
           <Legend
             verticalAlign="middle"
             align="right"
-            width="30%"
             layout="vertical"
             iconSize={15}
             iconType="circle"
