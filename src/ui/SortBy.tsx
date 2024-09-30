@@ -11,7 +11,7 @@ function SortBy({ options }: Props) {
   const [searchParams, setSearchParams] = useSearchParams();
   const sortBy = searchParams.get('sortBy') || options.at(0)?.value;
 
-  function handleChange(e) {
+  function handleChange(e: any) {
     searchParams.set('sortBy', e.target.value);
     setSearchParams(searchParams);
   }

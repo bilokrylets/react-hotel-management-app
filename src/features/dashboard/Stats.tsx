@@ -8,19 +8,29 @@ import Stat from './Stat';
 import { formatCurrency } from '../../utils/helpers';
 
 type Props = {
-  bookings: Array;
-  confirmedStays: Array;
+  bookings:
+    | { created_at: string; totalPrice: number; extrasPrice: number }[]
+    | undefined;
+  confirmedStays:
+    | {
+        numNights: number;
+      }[]
+    | undefined;
   numDays: number;
   cabinCount: number | undefined;
 };
 
 function Stats({ bookings, confirmedStays, numDays, cabinCount }: Props) {
-  const numBookings = bookings.length;
-  const sales = bookings.reduce((acc, cur) => acc + cur.totalPrice, 0);
-  const checkIns = confirmedStays.length;
-  const occupation =
-    confirmedStays.reduce((acc, cur) => acc + cur.numNights, 0) /
-    (numDays * (cabinCount ? cabinCount : 1));
+  const numBookings = bookings?.length;
+  const sales = bookings?.reduce(
+    (acc, cur) => acc + (cur ? cur.totalPrice : 0),
+    0,
+  );
+  const checkIns = confirmedStays?.length;
+  const occupation = confirmedStays
+    ? confirmedStays.reduce((acc, cur) => acc + cur.numNights, 0) /
+      (numDays * (cabinCount ? cabinCount : 1))
+    : 0;
 
   return (
     <>

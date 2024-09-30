@@ -1,17 +1,20 @@
 import { styled } from 'styled-components';
-import Input from './Input';
-import { ReactElement, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 type Props = {
   label?: string;
   error?: any;
-  children?: ReactElement;
+  children?: ReactNode;
 };
 
 function FormRow({ label, error, children }: Props) {
   return (
     <StyledFormRow>
-      {label && <Label htmlFor={children?.props.id}>{label}</Label>}
+      {label && (
+        <Label htmlFor={children && (children as React.ReactElement).props.id}>
+          {label}
+        </Label>
+      )}
       {children}
       {error && <Error>{error}</Error>}
     </StyledFormRow>

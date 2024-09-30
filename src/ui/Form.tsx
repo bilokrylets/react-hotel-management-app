@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 type FormProps = {
   type?: string;
-  onSubmit?: () => Promise<void>;
+  onSubmit?: any;
 };
 const Form = styled.form<FormProps>`
   ${(props) =>

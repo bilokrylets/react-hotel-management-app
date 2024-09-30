@@ -14,7 +14,7 @@ function Filter({ filterField, options }: Props) {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentFilter = searchParams.get(filterField) || options.at(0)?.value;
 
-  function handleClick(value) {
+  function handleClick(value: string) {
     searchParams.set(filterField, value);
     searchParams.set('page', '1');
     setSearchParams(searchParams);
@@ -45,7 +45,11 @@ const StyledFilter = styled.div`
   gap: 0.4rem;
 `;
 
-const FilterButton = styled.button`
+type FilterButtonType = {
+  active: boolean;
+};
+
+const FilterButton = styled.button<FilterButtonType>`
   background-color: var(--color-grey-0);
   border: none;
 

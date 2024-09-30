@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 type Props = {
   size?: 'small' | 'medium' | 'large';
   variation?: 'primary' | 'secondary' | 'danger';
+  onClick?: any;
 };
 
 const Button = styled.button<Props>`
@@ -10,8 +11,8 @@ const Button = styled.button<Props>`
   border-radius: var(--border-radius-sm);
   box-shadow: var(--shadow-sm);
 
-  ${(props) => sizes[props.size]}
-  ${(props) => variations[props.variation]}
+  ${(props) => sizes[props.size || 'medium']}
+  ${(props) => variations[props.variation || 'primary']}
 `;
 
 const sizes = {

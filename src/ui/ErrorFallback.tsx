@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import Heading from './Heading';
 import GlobalStyles from '../styles/globalStyles';
 import Button from './Button';
+import { FallbackProps } from 'react-error-boundary';
+import { ComponentType } from 'react';
 
 const StyledErrorFallback = styled.main`
   height: 100vh;
@@ -33,7 +35,10 @@ const Box = styled.div`
   }
 `;
 
-type Props = { error: Error; resetErrorBoundary: object };
+type Props = {
+  error: Error;
+  resetErrorBoundary: ComponentType<FallbackProps>;
+};
 function ErrorFallback({ error, resetErrorBoundary }: Props) {
   return (
     <>

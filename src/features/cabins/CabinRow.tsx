@@ -78,7 +78,7 @@ function CabinRow({ cabin }: Props) {
               <ConfirmDelete
                 resourceName="cabin"
                 disabled={isDeleting}
-                onConfirm={() => deleteCabin(cabinId)}
+                onConfirm={() => (cabinId ? deleteCabin(cabinId) : null)}
               />
             </Modal.Window>
           </Modal>

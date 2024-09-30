@@ -1,10 +1,24 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useContext,
+  useState,
+} from 'react';
 import { createPortal } from 'react-dom';
 import { HiEllipsisVertical } from 'react-icons/hi2';
 import styled from 'styled-components';
 import useClickOutside from '../services/useClickOutside';
 
-const MenusContext = createContext({});
+type ContextType = {
+  openId?: string | number;
+  close?: () => void;
+  open?: Dispatch<SetStateAction<string>>;
+  setPosition?: Dispatch<SetStateAction<null>>;
+  position?: any;
+};
+const MenusContext = createContext<ContextType>({});
 
 type MenusProps = {
   children: ReactNode;
@@ -23,16 +37,17 @@ function Menus({ children }: MenusProps) {
   );
 }
 
-function Toggle({ id }) {
+function Toggle({ id }: { id: number }) {
   const { openId, close, open, setPosition } = useContext(MenusContext);
 
-  function handleClick(e) {
+  function handleClick(e: any) {
     e.stopPropagation();
-    const rect = e.target.closest('button').getBoundingClientRect();
-    setPosition({
-      x: window.innerWidth - rect.width - rect.x,
-      y: rect.y + rect.height + 8,
-    });
+    const rect = e.target?.closest('button').getBoundingClientRect();
+    if (setPosition)
+      setPosition({
+        x: window.innerWidth - rect.width - rect.x,
+        y: rect.y + rect.height + 8,
+      });
 
     openId === '' || openId !== id ? open(id) : close();
   }
@@ -43,7 +58,7 @@ function Toggle({ id }) {
     </StyledToggle>
   );
 }
-function List({ id, children }) {
+function List({ id, children }: { id: number; children: ReactNode }) {
   const { openId, position, close } = useContext(MenusContext);
   const { ref } = useClickOutside(close, false);
 
@@ -68,7 +83,7 @@ function Button({ children, icon, onClick }: ButtonProps) {
   const { close } = useContext(MenusContext);
   function handleClick() {
     onClick?.();
-    close();
+    close?.();
   }
 
   return (

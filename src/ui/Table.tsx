@@ -1,4 +1,4 @@
-import { createContext, ReactElement, ReactNode, useContext } from 'react';
+import { createContext, ReactNode, useContext } from 'react';
 import styled from 'styled-components';
 
 const TableContext = createContext({ columns: '' });
@@ -32,7 +32,10 @@ function Row({ children }: ChildProps) {
     </StyledRow>
   );
 }
-function Body({ data, render }) {
+
+type BodyProps = { data: any; render: any };
+
+function Body({ data, render }: BodyProps) {
   if (!data.length) return <Empty>No data to show at the moment</Empty>;
 
   return <StyledBody>{data.map(render)}</StyledBody>;
@@ -47,7 +50,10 @@ const StyledTable = styled.div`
   overflow: hidden;
 `;
 
-const CommonRow = styled.div`
+type CommonRowType = {
+  columns: string;
+};
+const CommonRow = styled.div<CommonRowType>`
   display: grid;
   grid-template-columns: ${(props) => props.columns};
   column-gap: 2.4rem;
@@ -55,7 +61,10 @@ const CommonRow = styled.div`
   transition: none;
 `;
 
-const StyledHeader = styled(CommonRow)`
+type StyledHeaderProps = {
+  columns: string;
+};
+const StyledHeader = styled(CommonRow)<StyledHeaderProps>`
   padding: 1.6rem 2.4rem;
 
   background-color: var(--color-grey-50);

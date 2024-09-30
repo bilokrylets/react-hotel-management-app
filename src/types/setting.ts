@@ -1,3 +1,5 @@
+import { Cabin } from './cabin';
+
 export type Setting = {
   id: number;
   created_at: string;

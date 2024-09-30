@@ -1,3 +1,4 @@
+import { Booking } from '../types/booking';
 import { PAGE_SIZE } from '../utils/constants';
 import { getToday } from '../utils/helpers';
 import supabase from './supabase';
@@ -49,7 +50,7 @@ export async function getBookings({ filter, sortBy, page }: Props) {
   return { data, count };
 }
 
-export async function getBooking(id) {
+export async function getBooking(id: string | undefined) {
   const { data, error } = await supabase
     .from('bookings')
     .select('*, cabins(*), guests(*)')
@@ -65,7 +66,7 @@ export async function getBooking(id) {
 }
 
 // Returns all BOOKINGS that are were created after the given date. Useful to get bookings created in the last 30 days, for example.
-export async function getBookingsAfterDate(date) {
+export async function getBookingsAfterDate(date: string) {
   const { data, error } = await supabase
     .from('bookings')
     .select('created_at, totalPrice, extrasPrice')
@@ -81,7 +82,7 @@ export async function getBookingsAfterDate(date) {
 }
 
 // Returns all STAYS that are were created after the given date
-export async function getStaysAfterDate(date) {
+export async function getStaysAfterDate(date: string) {
   const { data, error } = await supabase
     .from('bookings')
     .select('*, guests(fullName)')
@@ -106,10 +107,6 @@ export async function getStaysTodayActivity() {
     )
     .order('created_at');
 
-  // Equivalent to this. But by querying this, we only download the data we actually need, otherwise we would need ALL bookings ever created
-  // (stay.status === 'unconfirmed' && isToday(new Date(stay.startDate))) ||
-  // (stay.status === 'checked-in' && isToday(new Date(stay.endDate)))
-
   if (error) {
     console.error(error);
     throw new Error('Bookings could not get loaded');
@@ -117,7 +114,7 @@ export async function getStaysTodayActivity() {
   return data;
 }
 
-export async function updateBooking(id, obj) {
+export async function updateBooking(id: number, obj: Partial<Booking>) {
   const { data, error } = await supabase
     .from('bookings')
     .update(obj)
@@ -132,7 +129,7 @@ export async function updateBooking(id, obj) {
   return data;
 }
 
-export async function deleteBooking(id) {
+export async function deleteBooking(id: number) {
   // REMEMBER RLS POLICIES
   const { data, error } = await supabase.from('bookings').delete().eq('id', id);
 

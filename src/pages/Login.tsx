@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import LoginForm from '../features/authentication/LoginForm';
-import Logo from '../ui/Logo';
+
 import Heading from '../ui/Heading';
 
 const LoginLayout = styled.main`
@@ -16,9 +16,9 @@ const LoginLayout = styled.main`
 function Login() {
   return (
     <LoginLayout>
-      <Logo />
       <Heading as={'h4'}>Log in to your account</Heading>
       <LoginForm />
+      <p>Placeholder has an active account email and password</p>
     </LoginLayout>
   );
 }

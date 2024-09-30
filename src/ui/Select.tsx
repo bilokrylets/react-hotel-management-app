@@ -5,7 +5,7 @@ type Props = {
     value?: string;
     label: string;
   }[];
-  value: string;
+  value?: string;
   type?: string;
   onChange?: (e: any) => void;
 };
@@ -22,7 +22,11 @@ function Select({ options, value, type, onChange }: Props) {
   );
 }
 
-const StyledSelect = styled.select`
+type StyledSelectProps = {
+  type?: string;
+};
+
+const StyledSelect = styled.select<StyledSelectProps>`
   font-size: 1.4rem;
   padding: 0.8rem 1.2rem;
   border: 1px solid

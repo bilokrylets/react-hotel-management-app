@@ -20,7 +20,7 @@ const Error = styled.span`
 type Props = {
   label?: string;
   error?: string;
-  children?: ReactNode;
+  children?: ReactNode | any;
 };
 
 function FormRowVertical({ label, error, children }: Props) {

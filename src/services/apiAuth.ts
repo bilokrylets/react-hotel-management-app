@@ -51,7 +51,15 @@ export async function logout() {
   if (error) throw new Error(error.message);
 }
 
-export async function updateCurrentUser({ password, fullName, avatar }) {
+export async function updateCurrentUser({
+  password,
+  fullName,
+  avatar,
+}: {
+  password?: string;
+  fullName?: string;
+  avatar?: any;
+}) {
   let updateData;
   if (password) updateData = { password };
   if (fullName)
@@ -78,7 +86,7 @@ export async function updateCurrentUser({ password, fullName, avatar }) {
         avatar: `${supabaseUrl}/storage/v1/object/public/avatars/${fileName}`,
       },
     });
-  if (error) throw new Error(updateError.message);
+  if (error) throw new Error(updateError?.message);
 
   return updatedUser;
 }

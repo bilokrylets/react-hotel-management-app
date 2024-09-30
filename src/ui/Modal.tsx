@@ -1,10 +1,12 @@
 import {
   cloneElement,
   createContext,
+  Dispatch,
+  JSXElementConstructor,
   ReactElement,
+  ReactNode,
+  SetStateAction,
   useContext,
-  useEffect,
-  useRef,
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
@@ -12,9 +14,14 @@ import { HiXMark } from 'react-icons/hi2';
 import styled from 'styled-components';
 import useClickOutside from '../services/useClickOutside';
 
-const ModalContext = createContext();
+type ContextProps = {
+  openName?: string;
+  close?: () => void;
+  open?: Dispatch<SetStateAction<string>>;
+};
+const ModalContext = createContext<ContextProps>({});
 
-function Modal({ children }) {
+function Modal({ children }: { children: ReactNode }) {
   const [openName, setOpenName] = useState('');
   const close = () => setOpenName('');
   const open = setOpenName;
@@ -26,10 +33,16 @@ function Modal({ children }) {
   );
 }
 
-function Open({ children, opensWindowName }) {
+function Open({
+  children,
+  opensWindowName,
+}: {
+  children: ReactElement<any, string | JSXElementConstructor<any>>;
+  opensWindowName: string;
+}) {
   const { open } = useContext(ModalContext);
 
-  return cloneElement(children, { onClick: () => open(opensWindowName) });
+  return cloneElement(children, { onClick: () => open?.(opensWindowName) });
 }
 
 type WindowProps = {

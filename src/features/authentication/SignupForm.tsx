@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Button from '../../ui/Button';
 import Form from '../../ui/Form';
 import FormRow from '../../ui/FormRow';
@@ -21,7 +21,7 @@ function SignupForm() {
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmit as SubmitHandler<FieldValues>)}>
       <FormRow label="Full name" error={errors?.fullName?.message}>
         <Input
           type="text"
